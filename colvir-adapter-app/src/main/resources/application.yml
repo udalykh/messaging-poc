@@ -1,0 +1,7 @@
+colvir:
+  requestDestination: 'test.out'
+  replyDestination: 'test.in'
+  receiveTimeout: 10000
+  replyTimeout: 10000
+
+

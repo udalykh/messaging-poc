@@ -20,28 +20,28 @@ import javax.jms.ConnectionFactory;
 @IntegrationComponentScan
 @Configuration
 public class AppConfig {
+//
+//    @Bean
+//    public MessageChannel requests() {
+//        return new DirectChannel();
+//    }
 
-    @Bean
-    public MessageChannel requests() {
-        return new DirectChannel();
-    }
-
-    @Bean
-    @ServiceActivator(inputChannel="requests")
-    public JmsOutboundGateway jmsGateway() {
+/*    @Bean
+    @ServiceActivator(inputChannel = "requests")
+    public JmsOutboundGateway jmsGateway(ConnectionFactory connectionFactory) {
         JmsOutboundGateway gw = new JmsOutboundGateway();
-        gw.setConnectionFactory(connectionFactory());
+        gw.setConnectionFactory(connectionFactory);
         gw.setRequestDestinationName("test.out");
         gw.setReplyDestinationName("test.in");
         gw.setCorrelationKey("JMSCorrelationID");
         return gw;
-    }
+    }*/
 
     @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory(new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false"));
     }
-
+/*
     @Bean
     public DefaultMessageListenerContainer responder() {
         DefaultMessageListenerContainer container = new DefaultMessageListenerContainer();
@@ -53,9 +53,21 @@ public class AppConfig {
             public String handleMessage(String in) {
                 return in.toUpperCase();
             }
-
         });
         container.setMessageListener(adapter);
         return container;
-    }
+    }*/
+
+    /*
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "acknowledge", "sessionAcknowledgeModeName");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "concurrent-consumers");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "max-concurrent-consumers");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "max-messages-per-task");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "receive-timeout");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "recovery-interval");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "idle-consumer-limit");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "idle-task-execution-limit");
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "cache-level");
+		IntegrationNamespaceUtils.setReferenceIfAttributeDefined(builder, element, "task-executor");
+     */
 }
