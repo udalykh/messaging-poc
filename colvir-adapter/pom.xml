@@ -7,6 +7,7 @@
     <groupId>com.newstandards.tsesna</groupId>
     <artifactId>colvir-adapter</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Messaging adapter module</name>
 
     <properties>
         <spring.version>4.3.4.RELEASE</spring.version>
@@ -40,6 +41,12 @@
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-jms</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.newstandards.tsesna</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

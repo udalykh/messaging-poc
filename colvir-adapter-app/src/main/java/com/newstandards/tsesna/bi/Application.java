@@ -1,4 +1,4 @@
-package com.newstandards.tsesna.colvir;
+package com.newstandards.tsesna.bi;
 
 
 import org.springframework.boot.SpringApplication;

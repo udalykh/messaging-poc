@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:jms="http://www.springframework.org/schema/integration/jms"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
+
+    <!--
+        JMS-based outbound gateway sending messages to a queue with the name "bi.messaging.requestDestination" and getting back responses
+        from a queue with the name "bi.messaging.replyDestination" and "wraps-up" messaging Proxy around MessagingBiProcessor
+     -->
+    <jms:outbound-gateway id="biOutboundGateway"
+                          request-channel="biRequestsChannel"
+                          request-destination-name="${bi.messaging.requestDestination}"
+                          reply-destination-name="${bi.messaging.replyDestination}"
+                          correlation-key="JMSCorrelationID"
+                          reply-channel="biReplyChannel"
+                          receive-timeout="${bi.messaging.receiveTimeout}"
+                          reply-timeout="${bi.messaging.replyTimeout}">
+
+        <!-- The reply is handles by a listener and not a poller -->
+        <jms:reply-listener/>
+    </jms:outbound-gateway>
+    <channel id="biRequestsChannel" />
+    <channel id="biReplyChannel"/>
+
+
+    <!-- JMS-based inbound gateway for integration with implementation of BiProcessor (ColvirBiProcessor as an example) -->
+    <jms:inbound-gateway id="biInboundGateway"
+                         request-destination-name="${bi.messaging.requestDestination}"
+                         request-channel="biResponseChannel"/>
+
+    <!--
+        Router for BiProcessor methods. Each of the BI processor methods needs its own mapping and a channel declaration. The channel declaration
+        is optional and can be omitted because in that case the channel will be created by the framework
+     -->
+    <header-value-router input-channel="biResponseChannel" header-name="method">
+        <mapping value="vinCodes" channel="vinCodesChannel" />
+        <mapping value="kbkList" channel="kbkListChannel" />
+    </header-value-router>
+
+    <!-- These are optional because not-existing channels are going to be created automatically as long as they are declared in ColvirBiProcessor -->
+    <channel id="vinCodesChannel"/>
+    <channel id="kbkListChannel"/>
+
+    <!-- TODO: add a filter to filter out messages not passing security check before dispatching a message -->
+</beans:beans>

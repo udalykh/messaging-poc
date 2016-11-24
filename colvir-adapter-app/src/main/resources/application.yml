@@ -1,7 +1,12 @@
-colvir:
-  requestDestination: 'test.out'
-  replyDestination: 'test.in'
-  receiveTimeout: 10000
-  replyTimeout: 10000
+bi:
+  messaging:
+    requestDestination: 'test.out'
+    replyDestination: 'test.in'
+    receiveTimeout: 10000
+    replyTimeout: 10000
+
+spring:
+  profiles:
+    active: 'colvir'
 
 

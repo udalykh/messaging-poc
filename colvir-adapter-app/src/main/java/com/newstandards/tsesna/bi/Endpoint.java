@@ -1,4 +1,4 @@
-package com.newstandards.tsesna.colvir;
+package com.newstandards.tsesna.bi;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,12 +10,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Example of a client of {@link BIProcessor} interface; the endpoint methods can be called like:
+ *
+ * <pre>
+ *     http://localhost:8080/kbkList
+ *     http://localhost:8080/vinCodes?bin=123456
+ * </pre>
+ */
 @RestController
 public class Endpoint {
 
     private final BIProcessor biProcessor;
 
-    public Endpoint(@Qualifier("colvirService") BIProcessor biProcessor) {
+    public Endpoint(@Qualifier("messagingBiProcessor") BIProcessor biProcessor) {
         this.biProcessor = biProcessor;
     }
 
