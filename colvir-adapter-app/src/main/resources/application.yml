@@ -5,6 +5,9 @@ bi:
     receiveTimeout: 10000
     replyTimeout: 10000
 
+# URL for embedded ActiveMQ connection factory
+brokerURL: 'vm://localhost?broker.persistent=false'
+
 spring:
   profiles:
     active: 'colvir'

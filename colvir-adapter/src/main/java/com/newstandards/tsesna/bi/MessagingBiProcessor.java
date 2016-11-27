@@ -14,6 +14,8 @@ import java.util.List;
  * This interface has package visibility and is not supposed to be used directly in classes; {@link BIProcessor} interface should be injected as a
  * Spring bean.
  *
+ * Spring integration is going to create the messaging gateway only if Spring profile "messaging-out" is active
+ *
  * TODO: one of the parameters should be some security token to be analyzed by the recipient
  */
 @MessagingGateway(name = "messagingBiProcessor", defaultRequestChannel = "biRequestsChannel", defaultReplyChannel = "biReplyChannel")

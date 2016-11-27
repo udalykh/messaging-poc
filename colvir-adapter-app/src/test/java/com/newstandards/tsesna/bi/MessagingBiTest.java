@@ -18,8 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootApplication
-@ContextConfiguration(classes = {AppConfig.class, MessagingBiConfig.class}, initializers = ConfigFileApplicationContextInitializer.class)
-@ActiveProfiles("colvir")
+@ActiveProfiles({"messaging-in", "messaging-out"})
+@ContextConfiguration(
+        classes = {AppConfig.class, MessagingBiInConfig.class, MessagingBiOutConfig.class},
+        initializers = ConfigFileApplicationContextInitializer.class
+)
 public class MessagingBiTest {
 
     @Autowired

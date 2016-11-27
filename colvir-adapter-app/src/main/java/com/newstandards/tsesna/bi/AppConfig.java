@@ -1,6 +1,7 @@
 package com.newstandards.tsesna.bi;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.IntegrationComponentScan;
@@ -21,7 +22,7 @@ public class AppConfig {
      * JMS connection factory based on internal Apache Active MQ message broker
      */
     @Bean
-    public ConnectionFactory connectionFactory() {
-        return new CachingConnectionFactory(new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false"));
+    public ConnectionFactory connectionFactory(@Value("${brokerURL}") String brokerURL) {
+        return new CachingConnectionFactory(new ActiveMQConnectionFactory(brokerURL));
     }
 }

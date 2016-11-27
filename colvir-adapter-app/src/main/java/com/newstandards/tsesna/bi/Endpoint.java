@@ -2,6 +2,7 @@ package com.newstandards.tsesna.bi;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.Map;
  *     http://localhost:8080/vinCodes?bin=123456
  * </pre>
  */
+@Profile("messaging-out")
 @RestController
 public class Endpoint {
 

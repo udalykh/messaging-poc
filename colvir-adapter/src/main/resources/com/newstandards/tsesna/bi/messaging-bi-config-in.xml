@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/integration"
+<beans:beans profile="messaging-in"
+             xmlns="http://www.springframework.org/schema/integration"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:jms="http://www.springframework.org/schema/integration/jms"
@@ -9,26 +10,6 @@
 			http://www.springframework.org/schema/integration/spring-integration.xsd
 			http://www.springframework.org/schema/integration/jms
 			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
-
-    <!--
-        JMS-based outbound gateway sending messages to a queue with the name "bi.messaging.requestDestination" and getting back responses
-        from a queue with the name "bi.messaging.replyDestination" and "wraps-up" messaging Proxy around MessagingBiProcessor
-     -->
-    <jms:outbound-gateway id="biOutboundGateway"
-                          request-channel="biRequestsChannel"
-                          request-destination-name="${bi.messaging.requestDestination}"
-                          reply-destination-name="${bi.messaging.replyDestination}"
-                          correlation-key="JMSCorrelationID"
-                          reply-channel="biReplyChannel"
-                          receive-timeout="${bi.messaging.receiveTimeout}"
-                          reply-timeout="${bi.messaging.replyTimeout}">
-
-        <!-- The reply is handles by a listener and not a poller -->
-        <jms:reply-listener/>
-    </jms:outbound-gateway>
-    <channel id="biRequestsChannel" />
-    <channel id="biReplyChannel"/>
-
 
     <!-- JMS-based inbound gateway for integration with implementation of BiProcessor (ColvirBiProcessor as an example) -->
     <jms:inbound-gateway id="biInboundGateway"
