@@ -27,7 +27,12 @@
         <!-- The reply is handles by a listener and not a poller -->
         <jms:reply-listener/>
     </jms:outbound-gateway>
-    <channel id="biRequestsChannel"/>
+
+    <channel id="biRequestsChannel" >
+        <interceptors>
+            <ref bean="biRequestsInterceptor"/>
+        </interceptors>
+    </channel>
     <channel id="biReplyChannel"/>
 
 </beans:beans>

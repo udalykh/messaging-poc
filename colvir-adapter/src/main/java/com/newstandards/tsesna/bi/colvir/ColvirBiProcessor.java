@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Serves serving as a Message Endpoint - methods of this class are indirectly called by Spring Integration framework.
+ * Serves as a Message Endpoint - methods of this class are indirectly called by Spring Integration framework.
  * Created by default unless {@code bi-producer} Spring profile is active.
  */
 @MessageEndpoint
