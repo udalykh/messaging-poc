@@ -20,7 +20,7 @@
         Router for BiProcessor methods. Each of the BI processor methods needs its own mapping and a channel declaration. The channel declaration
         is optional and can be omitted because in that case the channel will be created by the framework
      -->
-    <header-value-router input-channel="biResponseChannel" header-name="method">
+    <header-value-router input-channel="foo" header-name="method">
         <mapping value="vinCodes" channel="vinCodesChannel" />
         <mapping value="kbkList" channel="kbkListChannel" />
     </header-value-router>
@@ -29,5 +29,5 @@
     <channel id="vinCodesChannel"/>
     <channel id="kbkListChannel"/>
 
-    <!-- TODO: add a filter to filter out messages not passing security check before dispatching a message -->
+    <filter input-channel="biResponseChannel" ref="biMessageSelector" output-channel="foo"/>
 </beans:beans>
