@@ -18,8 +18,10 @@ import java.util.Map;
  *     http://localhost:8080/kbkList
  *     http://localhost:8080/vinCodes?bin=123456
  * </pre>
+ *
+ * This class is created by default unless {@code bi-consumer} Spring profile is active.
  */
-@Profile("messaging-out")
+@Profile("!bi-consumer")
 @RestController
 public class Endpoint {
 

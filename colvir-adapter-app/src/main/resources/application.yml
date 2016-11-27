@@ -5,11 +5,16 @@ bi:
     receiveTimeout: 10000
     replyTimeout: 10000
 
-# URL for embedded ActiveMQ connection factory
+# the default URL for embedded ActiveMQ connection factory
 brokerURL: 'vm://localhost?broker.persistent=false'
 
+---
+
 spring:
-  profiles:
-    active: 'colvir'
+  profiles: 'bi-consumer'
+server:
+    port: 9000
+
+
 
 

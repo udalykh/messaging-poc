@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootApplication
-@ActiveProfiles({"messaging-in", "messaging-out"})
 @ContextConfiguration(
         classes = {AppConfig.class, MessagingBiInConfig.class, MessagingBiOutConfig.class},
         initializers = ConfigFileApplicationContextInitializer.class
@@ -40,5 +38,4 @@ public class MessagingBiTest {
         List<Object> kbkList =  biProcessor.getKbkList();
         assertThat(kbkList).isEqualTo(Collections.singletonList("KBK List"));
     }
-
 }
