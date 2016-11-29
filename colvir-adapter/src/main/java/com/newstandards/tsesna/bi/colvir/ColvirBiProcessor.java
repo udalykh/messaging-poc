@@ -24,7 +24,7 @@ class ColvirBiProcessor implements BIProcessor {
     public String getVinCodes(String bin) {
 
         //TODO: do SOAP call to Colvir
-        return "VIN codes";
+        return "VIN codes: " + bin ;
     }
 
     /**
