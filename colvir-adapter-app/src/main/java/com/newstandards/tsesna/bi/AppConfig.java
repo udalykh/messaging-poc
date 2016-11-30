@@ -34,7 +34,7 @@ public class AppConfig {
         JmsFactoryFactory ff = JmsFactoryFactory.getInstance(WMQConstants.WMQ_PROVIDER);
 	    JmsConnectionFactory cf = ff.createConnectionFactory();
 	    cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, "QM1");
-	    cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
+	    cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_BINDINGS);
 	    cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, "localhost");
 	    cf.setIntProperty(WMQConstants.WMQ_PORT, 1414);
 
