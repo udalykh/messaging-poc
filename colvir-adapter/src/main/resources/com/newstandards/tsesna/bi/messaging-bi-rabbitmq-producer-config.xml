@@ -9,13 +9,36 @@
 			http://www.springframework.org/schema/integration
 			http://www.springframework.org/schema/integration/spring-integration.xsd
 			http://www.springframework.org/schema/integration/jms
-			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd"
+             xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp" xmlns:rabbit="http://www.springframework.org/schema/rabbit">
+
+    <int-amqp:outbound-gateway id="biOutboundGateway"
+                               request-channel="biRequestsChannel"
+                               reply-channel="biReplyChannel"
+                               exchange-name="cafe-drinks"
+                               amqp-template="rabbitTemplate"
+                               routing-key="drink.hot"
+                               reply-timeout="${bi.messaging.replyTimeout}"
+    >
+
+
+
+    </int-amqp:outbound-gateway>
+    <poller default="true" fixed-rate="100"/>
+
+
+    <channel id="biRequestsChannel">
+        <queue/>
+    </channel>
+    <channel id="biReplyChannel">
+        <queue/>
+    </channel>
 
     <!--
         JMS-based outbound gateway sending messages to a queue with the name "bi.messaging.requestDestination" and getting back responses
         from a queue with the name "bi.messaging.replyDestination" and "wraps-up" messaging Proxy around MessagingBiProcessor
      -->
-    <jms:outbound-gateway id="biOutboundGateway"
+<!--    <jms:outbound-gateway id="biOutboundGateway"
                           request-channel="biRequestsChannel"
                           request-destination-name="${bi.messaging.requestDestination}"
                           reply-destination-name="${bi.messaging.replyDestination}"
@@ -24,7 +47,7 @@
                           receive-timeout="${bi.messaging.receiveTimeout}"
                           reply-timeout="${bi.messaging.replyTimeout}">
 
-        <!-- The reply is handles by a listener and not a poller -->
+        &lt;!&ndash; The reply is handles by a listener and not a poller &ndash;&gt;
         <jms:reply-listener/>
     </jms:outbound-gateway>
 
@@ -33,6 +56,6 @@
             <ref bean="biRequestsInterceptor"/>
         </interceptors>
     </channel>
-    <channel id="biReplyChannel"/>
+    <channel id="biReplyChannel"/>-->
 
 </beans:beans>

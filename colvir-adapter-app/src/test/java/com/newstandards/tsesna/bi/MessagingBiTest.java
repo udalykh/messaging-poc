@@ -30,7 +30,7 @@ public class MessagingBiTest {
     @Test
     public void shouldGetVinCodes() {
         String codes = biProcessor.getVinCodes("12345");
-        assertThat(codes).isEqualTo("VIN codes");
+        assertThat(codes).isEqualTo("VIN codes: 12345");
     }
 
     @Test

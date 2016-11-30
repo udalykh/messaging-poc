@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Profile("!bi-consumer")
-@ImportResource("classpath:com/newstandards/tsesna/bi/messaging-bi-producer-config.xml")
+@ImportResource({
+    "classpath:com/newstandards/tsesna/bi/messaging-bi-activemq-producer-config.xml"
+})
 public class MessagingBiOutConfig {
 }
