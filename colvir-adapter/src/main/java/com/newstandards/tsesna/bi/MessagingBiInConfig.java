@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("!bi-producer")
 @ImportResource({
-    "classpath:com/newstandards/tsesna/bi/messaging-bi-activemq-consumer-config.xml"
+    "classpath:com/newstandards/tsesna/bi/messaging-bi-common-consumer-config.xml",
+    "classpath:com/newstandards/tsesna/bi/messaging-bi-activemq-consumer-config.xml",
+    "classpath:com/newstandards/tsesna/bi/messaging-bi-rabbitmq-consumer-config.xml",
 })
 public class MessagingBiInConfig {
 }

@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans profile="!bi-producer"
+<beans:beans profile="rabbitmq"
              xmlns="http://www.springframework.org/schema/integration"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:jms="http://www.springframework.org/schema/integration/jms"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans.xsd
-
 			http://www.springframework.org/schema/integration
 			http://www.springframework.org/schema/integration/spring-integration.xsd
-
-			http://www.springframework.org/schema/integration/jms
-			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
 			http://www.springframework.org/schema/integration/amqp
 			http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
 			http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd"
@@ -19,58 +14,20 @@
 
     <int-amqp:inbound-gateway id="biInboundGateway"
                                request-channel="biResponseChannel"
-                               queue-names="all-drinks"
+                               queue-names="biRequests"
                                amqp-template="rabbitTemplate"
-                               reply-timeout="${bi.messaging.replyTimeout}"  />
+                               reply-timeout="${bi.messaging.replyTimeout}"/>
 
-
-
-
-
-    <!--<rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" reply-timeout="10000" />-->
-    <rabbit:template id="rabbitTemplate" connection-factory="rabbitConnectionFactory" reply-timeout="10000" />
+    <rabbit:template id="rabbitTemplate" connection-factory="rabbitConnectionFactory" reply-timeout="${bi.messaging.replyTimeout}" />
     <rabbit:admin connection-factory="rabbitConnectionFactory" />
 
-
-    <rabbit:queue name="all-drinks" auto-delete="true" durable="true"/>
-
+    <rabbit:queue name="biRequests" auto-delete="true" durable="true"/>
 
     <!-- rabbit exchanges, queues, and bindings used by this app -->
-    <rabbit:topic-exchange name="cafe-drinks" auto-delete="true" durable="true">
+    <rabbit:topic-exchange name="biExchange" auto-delete="true" durable="true">
         <rabbit:bindings>
-            <rabbit:binding queue="all-drinks" pattern="drink.hot"/>
+            <rabbit:binding queue="biRequests" pattern="*"/>
         </rabbit:bindings>
     </rabbit:topic-exchange>
 
-
-    <!-- JMS-based inbound gateway for integration with implementation of BiProcessor (ColvirBiProcessor as an example) -->
-<!--    <jms:inbound-gateway id="biInboundGateway"
-                         request-destination-name="${bi.messaging.requestDestination}"
-                         request-channel="biResponseChannel"/>
-
-    &lt;!&ndash;
-        Router for BiProcessor methods. Each of the BI processor methods needs its own mapping and a channel declaration. The channel declaration
-        is optional and can be omitted because in that case the channel will be created by the framework
-     &ndash;&gt;
-    <header-value-router input-channel="foo" header-name="method">
-        <mapping value="vinCodes" channel="vinCodesChannel" />
-        <mapping value="kbkList" channel="kbkListChannel" />
-    </header-value-router>
-
-    &lt;!&ndash; These are optional because not-existing channels are going to be created automatically as long as they are declared in ColvirBiProcessor &ndash;&gt;
-    <channel id="vinCodesChannel"/>
-    <channel id="kbkListChannel"/>
-
-    <filter input-channel="biResponseChannel" ref="biMessageSelector" output-channel="foo"/>-->
-
-
-    <header-value-router input-channel="foo" header-name="method">
-        <mapping value="vinCodes" channel="vinCodesChannel" />
-        <mapping value="kbkList" channel="kbkListChannel" />
-    </header-value-router>
-
-    <channel id="vinCodesChannel"/>
-    <channel id="kbkListChannel"/>
-
-    <filter input-channel="biResponseChannel" ref="biMessageSelector" output-channel="foo"/>
 </beans:beans>

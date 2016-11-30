@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans profile="!bi-consumer"
+<beans:beans profile="rabbitmq"
              xmlns="http://www.springframework.org/schema/integration"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:jms="http://www.springframework.org/schema/integration/jms"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/integration
 			http://www.springframework.org/schema/integration/spring-integration.xsd
-			http://www.springframework.org/schema/integration/jms
-			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd"
-             xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp" xmlns:rabbit="http://www.springframework.org/schema/rabbit">
+
+			 http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd"
+             xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp">
 
     <int-amqp:outbound-gateway id="biOutboundGateway"
                                request-channel="biRequestsChannel"
                                reply-channel="biReplyChannel"
-                               exchange-name="cafe-drinks"
+                               exchange-name="biExchange"
                                amqp-template="rabbitTemplate"
-                               routing-key="drink.hot"
-                               reply-timeout="${bi.messaging.replyTimeout}"
-    >
-
-
-
-    </int-amqp:outbound-gateway>
+                               routing-key="biKey"
+                               reply-timeout="${bi.messaging.replyTimeout}"/>
     <poller default="true" fixed-rate="100"/>
-
 
     <channel id="biRequestsChannel">
         <queue/>
@@ -33,29 +26,4 @@
     <channel id="biReplyChannel">
         <queue/>
     </channel>
-
-    <!--
-        JMS-based outbound gateway sending messages to a queue with the name "bi.messaging.requestDestination" and getting back responses
-        from a queue with the name "bi.messaging.replyDestination" and "wraps-up" messaging Proxy around MessagingBiProcessor
-     -->
-<!--    <jms:outbound-gateway id="biOutboundGateway"
-                          request-channel="biRequestsChannel"
-                          request-destination-name="${bi.messaging.requestDestination}"
-                          reply-destination-name="${bi.messaging.replyDestination}"
-                          correlation-key="JMSCorrelationID"
-                          reply-channel="biReplyChannel"
-                          receive-timeout="${bi.messaging.receiveTimeout}"
-                          reply-timeout="${bi.messaging.replyTimeout}">
-
-        &lt;!&ndash; The reply is handles by a listener and not a poller &ndash;&gt;
-        <jms:reply-listener/>
-    </jms:outbound-gateway>
-
-    <channel id="biRequestsChannel" >
-        <interceptors>
-            <ref bean="biRequestsInterceptor"/>
-        </interceptors>
-    </channel>
-    <channel id="biReplyChannel"/>-->
-
 </beans:beans>

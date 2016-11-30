@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns="http://www.springframework.org/schema/integration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+    <!--
+        Router for BiProcessor methods. Each of the BI processor methods needs its own mapping and a channel declaration. The channel declaration
+        is optional and can be omitted because in that case the channel will be created by the framework
+     -->
+    <header-value-router input-channel="routerInputChannel" header-name="method">
+        <mapping value="vinCodes" channel="vinCodesChannel" />
+        <mapping value="kbkList" channel="kbkListChannel" />
+    </header-value-router>
+
+    <!-- These are optional because not-existing channels are going to be created automatically as long as they are declared in ColvirBiProcessor -->
+    <channel id="vinCodesChannel"/>
+    <channel id="kbkListChannel"/>
+
+    <filter input-channel="biResponseChannel" ref="biMessageSelector" output-channel="routerInputChannel"/>
+</beans:beans>
