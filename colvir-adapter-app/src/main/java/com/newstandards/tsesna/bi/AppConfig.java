@@ -36,7 +36,7 @@ public class AppConfig {
 	    cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, "QM1");
 	    cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
 	    cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, "localhost");
-	    cf.setStringProperty(WMQConstants.WMQ_CHANNEL, "SYSTEM.DEF.SVRCONN");
+	    cf.setStringProperty(WMQConstants.WMQ_CHANNEL, "SYSTEM.ADMIN.SVRCONN");
 	    cf.setIntProperty(WMQConstants.WMQ_PORT, 2001);
 
         return cf;
