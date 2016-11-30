@@ -26,7 +26,7 @@
     <!-- rabbit exchanges, queues, and bindings used by this app -->
     <rabbit:topic-exchange name="biExchange" auto-delete="true" durable="true">
         <rabbit:bindings>
-            <rabbit:binding queue="biRequests" pattern="*"/>
+            <rabbit:binding queue="biRequests" pattern="biKey"/>
         </rabbit:bindings>
     </rabbit:topic-exchange>
 

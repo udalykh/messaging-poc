@@ -28,11 +28,5 @@
         <jms:reply-listener/>
     </jms:outbound-gateway>
 
-    <channel id="biRequestsChannel" >
-        <interceptors>
-            <ref bean="biRequestsInterceptor"/>
-        </interceptors>
-    </channel>
-    <channel id="biReplyChannel"/>
 
 </beans:beans>

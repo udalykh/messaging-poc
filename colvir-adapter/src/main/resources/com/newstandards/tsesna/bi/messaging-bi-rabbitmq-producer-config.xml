@@ -18,12 +18,4 @@
                                amqp-template="rabbitTemplate"
                                routing-key="biKey"
                                reply-timeout="${bi.messaging.replyTimeout}"/>
-    <poller default="true" fixed-rate="100"/>
-
-    <channel id="biRequestsChannel">
-        <queue/>
-    </channel>
-    <channel id="biReplyChannel">
-        <queue/>
-    </channel>
 </beans:beans>
