@@ -24,13 +24,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-broker</artifactId>
-            <version>5.12.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.newstandards.tsesna</groupId>
             <artifactId>colvir-adapter</artifactId>
             <version>1.0-SNAPSHOT</version>

@@ -1,4 +1,4 @@
-package com.newstandards.tsesna.bi;
+package com.newstandards.tsesna.bi.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;

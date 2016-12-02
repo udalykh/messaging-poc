@@ -1,11 +1,13 @@
 package com.newstandards.tsesna.bi;
 
+import com.newstandards.tsesna.bi.config.MessagingBiConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,9 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootApplication
 @ContextConfiguration(
-        classes = {AppConfig.class, MessagingBiInConfig.class, MessagingBiOutConfig.class},
+        classes = {MessagingBiConfig.class},
         initializers = ConfigFileApplicationContextInitializer.class
 )
+@ActiveProfiles("activemq")
 public class MessagingBiTest {
 
     @Autowired
