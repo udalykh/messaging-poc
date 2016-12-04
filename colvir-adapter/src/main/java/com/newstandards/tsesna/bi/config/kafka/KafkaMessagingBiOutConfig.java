@@ -6,21 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.expression.common.LiteralExpression;
 import org.springframework.integration.annotation.ServiceActivator;
-import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter;
 import org.springframework.integration.kafka.outbound.KafkaProducerMessageHandler;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
-import org.springframework.kafka.listener.adapter.RecordMessagingMessageListenerAdapter;
 import org.springframework.kafka.listener.config.ContainerProperties;
 import org.springframework.kafka.support.TopicPartitionInitialOffset;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.messaging.PollableChannel;
-import sun.reflect.misc.MethodUtil;
-
-import java.lang.reflect.Method;
 
 @Profile("kafka")
 public class KafkaMessagingBiOutConfig {
@@ -40,7 +34,7 @@ public class KafkaMessagingBiOutConfig {
     public MessageHandler requestHandler(KafkaTemplate<String, String> biOutKafkaTemplate) {
         KafkaProducerMessageHandler<String, String> handler = new KafkaProducerMessageHandler<>(biOutKafkaTemplate);
         handler.setTopicExpression(new LiteralExpression(this.requestDestination));
-        handler.setMessageKeyExpression(new LiteralExpression(this.messageKeyRequest));
+//        handler.setSendTimeout(); //TODO
         return handler;
     }
 
@@ -49,20 +43,15 @@ public class KafkaMessagingBiOutConfig {
         return new KafkaTemplate<>(producerFactory);
     }
 
-/*
+
 
     @Bean("replyContainer")
     public KafkaMessageListenerContainer<String, String> replyContainer(ConsumerFactory<String, String> consumerFactory)
             throws NoSuchMethodException {
-
-        Method method = MethodUtil.getMethod(MyService.class, "onMessage", new Class[] { Object.class});
-        RecordMessagingMessageListenerAdapter adapter = new RecordMessagingMessageListenerAdapter(myService(), method);
-
         ContainerProperties properties = new ContainerProperties(new TopicPartitionInitialOffset(replyDestination, 0));
-        properties.setMessageListener(adapter);
         return new KafkaMessageListenerContainer<>(consumerFactory, properties);
-    }*/
-/*
+    }
+
 
     @Bean("responseAdapter")
     public KafkaMessageDrivenChannelAdapter<String, String> responseAdapter(@Qualifier("replyContainer")
@@ -72,11 +61,6 @@ public class KafkaMessagingBiOutConfig {
         kafkaMessageDrivenChannelAdapter.setOutputChannelName("biReplyChannel");
         return kafkaMessageDrivenChannelAdapter;
     }
-*/
-
-
-
-
 
     @Bean
     public TopicCreator requestDestinationTopicCreator(@Value("${zookeeperURL}") String zookeeperURL) {

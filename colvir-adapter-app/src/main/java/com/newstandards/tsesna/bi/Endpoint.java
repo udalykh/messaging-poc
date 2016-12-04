@@ -1,14 +1,19 @@
 package com.newstandards.tsesna.bi;
 
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.integration.amqp.support.MappingUtils;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.PollableChannel;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,21 +30,27 @@ import java.util.Map;
 @RestController
 public class Endpoint {
 
-    private final BIProcessor biProcessor;
+    @Autowired
+    private MessageChannel biRequestsChannel;
+    @Autowired
+    private PollableChannel biReplyChannel;
 
-    public Endpoint(@Qualifier("messagingBiProcessor") BIProcessor biProcessor) {
-        this.biProcessor = biProcessor;
-    }
 
     @RequestMapping("/vinCodes")
     public Map<String, Object> getVinCodes(@RequestParam String bin) {
-        String vinCodes = biProcessor.getVinCodes(bin);
-        return Collections.singletonMap("vinCodes", vinCodes);
+        Message<?> message = new GenericMessage<>(bin, Collections.singletonMap(KafkaHeaders.MESSAGE_KEY, "vinCodes"));
+        biRequestsChannel.send(message);
+
+        Message<?> resp = biReplyChannel.receive(10000);
+        return Collections.singletonMap("vinCodes", resp.getPayload());
     }
 
     @RequestMapping("/kbkList")
     public Map<String, Object> getKbkList() {
-        List<Object> response = biProcessor.getKbkList();
-        return Collections.singletonMap("kbkList", response);
+        Message<?> message = new GenericMessage<>("getKbkList", Collections.singletonMap(KafkaHeaders.MESSAGE_KEY, "kbkList"));
+        biRequestsChannel.send(message);
+
+        Message<?> resp = biReplyChannel.receive(10000);
+        return Collections.singletonMap("kbkList", resp.getPayload());
     }
 }

@@ -12,7 +12,7 @@
         Router for BiProcessor methods. Each of the BI processor methods needs its own mapping and a channel declaration. The channel declaration
         is optional and can be omitted because in that case the channel will be created by the framework
      -->
-    <header-value-router input-channel="routerInputChannel" header-name="method">
+    <header-value-router input-channel="routerInputChannel" header-name="kafka_receivedMessageKey">
         <mapping value="vinCodes" channel="vinCodesChannel" />
         <mapping value="kbkList" channel="kbkListChannel" />
     </header-value-router>

@@ -19,7 +19,7 @@ class ColvirBiProcessor implements BIProcessor {
     /**
      * A message is routed to this method if the message header "method" equals to "vinCodesChannel"
      */
-    @ServiceActivator(inputChannel = "vinCodesChannel")
+    @ServiceActivator(inputChannel = "vinCodesChannel", outputChannel = "biProcessorChannelReply")
     @Override
     public String getVinCodes(String bin) {
 
@@ -30,7 +30,7 @@ class ColvirBiProcessor implements BIProcessor {
     /**
      * A message is routed to this method if the message header "method" equals to "kbkListChannel"
      */
-    @ServiceActivator(inputChannel = "kbkListChannel")
+    @ServiceActivator(inputChannel = "kbkListChannel", outputChannel = "biProcessorChannelReply")
     @Override
     public List<Object> getKbkList() {
 

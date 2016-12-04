@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.expression.common.LiteralExpression;
 import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter;
 import org.springframework.integration.kafka.outbound.KafkaProducerMessageHandler;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -14,6 +15,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.config.ContainerProperties;
 import org.springframework.kafka.support.TopicPartitionInitialOffset;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 @Profile("kafka")
@@ -40,19 +42,24 @@ public class KafkaMessagingBiInConfig {
             @Qualifier("requestContainer") KafkaMessageListenerContainer<String, String> requestContainer) {
         KafkaMessageDrivenChannelAdapter<String, String> kafkaMessageDrivenChannelAdapter =
                 new KafkaMessageDrivenChannelAdapter<>(requestContainer);
-//        kafkaMessageDrivenChannelAdapter.setOutputChannelName("biResponseChannel");
-        kafkaMessageDrivenChannelAdapter.setOutputChannelName("vinCodesChannel");
+        kafkaMessageDrivenChannelAdapter.setOutputChannelName("biResponseChannel");
         return kafkaMessageDrivenChannelAdapter;
     }
 
+
     // Serves the response of ColvirBiProcessor method calls
-    @ServiceActivator(inputChannel = "vinCodesChannelReply")
+    @ServiceActivator(inputChannel = "biProcessorChannelReply")
     @Bean
     public MessageHandler responseHandler(KafkaTemplate<String, String> biInKafkaTemplate) {
         KafkaProducerMessageHandler<String, String> handler = new KafkaProducerMessageHandler<>(biInKafkaTemplate);
         handler.setTopicExpression(new LiteralExpression(this.replyDestination));
         handler.setMessageKeyExpression(new LiteralExpression(this.messageKeyReply));
         return handler;
+    }
+
+    @Bean
+    public MessageChannel biProcessorChannelReply() {
+        return new DirectChannel();
     }
 
     @Bean

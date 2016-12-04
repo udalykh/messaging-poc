@@ -13,5 +13,7 @@
             <ref bean="biRequestsInterceptor"/>
         </interceptors>
     </channel>
-    <channel id="biReplyChannel"/>
+    <channel id="biReplyChannel">
+        <queue/>
+    </channel>
 </beans:beans>
