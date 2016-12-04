@@ -40,7 +40,8 @@ kafka:
     enableAutoCommitConfig: true
     autoCommitIntervalMsConfig: 100
     sessionTimeoutMsConfig: 15000
-  messageKey: bi.key
+  messageKeyRequest: bi.key.request
+  messageKeyReply: bi.key.reply
 
 
 

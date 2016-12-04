@@ -17,19 +17,19 @@ public class KafkaConsumerConfig {
     @Value("${kafka.consumer.sessionTimeoutMsConfig}")
     private int sessionTimeoutMsConfig;
 
-    public String getGroupIdConfig() {
+    String getGroupIdConfig() {
         return groupIdConfig;
     }
 
-    public boolean isEnableAutoCommitConfig() {
+    boolean isEnableAutoCommitConfig() {
         return enableAutoCommitConfig;
     }
 
-    public int getAutoCommitIntervalMsConfig() {
+    int getAutoCommitIntervalMsConfig() {
         return autoCommitIntervalMsConfig;
     }
 
-    public int getSessionTimeoutMsConfig() {
+    int getSessionTimeoutMsConfig() {
         return sessionTimeoutMsConfig;
     }
 }

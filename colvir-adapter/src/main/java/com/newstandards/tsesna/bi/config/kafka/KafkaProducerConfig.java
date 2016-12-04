@@ -17,19 +17,19 @@ public class KafkaProducerConfig {
     @Value("${kafka.producer.bufferMemoryConfig}")
     private int bufferMemoryConfig;
 
-    public int getRetriesConfig() {
+    int getRetriesConfig() {
         return retriesConfig;
     }
 
-    public int getBatchSizeConfig() {
+    int getBatchSizeConfig() {
         return batchSizeConfig;
     }
 
-    public int getLingerMsConfig() {
+    int getLingerMsConfig() {
         return lingerMsConfig;
     }
 
-    public int getBufferMemoryConfig() {
+    int getBufferMemoryConfig() {
         return bufferMemoryConfig;
     }
 }

@@ -1,6 +1,7 @@
 package com.newstandards.tsesna.bi.config;
 
-import org.springframework.context.annotation.Configuration;
+import com.newstandards.tsesna.bi.config.kafka.KafkaMessagingBiInConfig;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 
@@ -10,12 +11,12 @@ import org.springframework.context.annotation.Profile;
  * If this class is found on the class-path then inbound messaging-based BI mechanism is turned on
  * automatically by default unless {@code bi-producer} Spring profile is active.
  */
-@Configuration
 @Profile("!bi-producer")
 @ImportResource({
     "classpath:com/newstandards/tsesna/bi/messaging-bi-common-consumer-config.xml",
     "classpath:com/newstandards/tsesna/bi/messaging-bi-activemq-consumer-config.xml",
     "classpath:com/newstandards/tsesna/bi/messaging-bi-rabbitmq-consumer-config.xml",
 })
+@Import(KafkaMessagingBiInConfig.class)
 public class MessagingBiInConfig {
 }
