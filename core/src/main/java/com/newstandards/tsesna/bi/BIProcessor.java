@@ -1,7 +1,5 @@
 package com.newstandards.tsesna.bi;
 
-import java.util.List;
-
 /**
  * Generic interface with business integration methods
  */
@@ -15,5 +13,5 @@ public interface BIProcessor {
     /**
      * Gets a list of KBK (Коды бюджетной классификации)
      */
-    List<Object> getKbkList();
+    String getKbkList();
 }

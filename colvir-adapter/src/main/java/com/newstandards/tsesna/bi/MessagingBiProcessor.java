@@ -5,8 +5,6 @@ import org.springframework.integration.annotation.GatewayHeader;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.messaging.handler.annotation.Payload;
 
-import java.util.List;
-
 /**
  * Provides an Integration Messaging Gateway Proxy for {@link BIProcessor} unaware of the message endpoint implementation. Spring Integration
  * framework creates a messaging-based implementation of this interface.
@@ -37,6 +35,6 @@ interface MessagingBiProcessor extends BIProcessor {
     @Override
     @Payload("#gatewayMethod.name")
     @Gateway(headers = {@GatewayHeader(name = "method", value = "kbkList")})
-    List<Object> getKbkList();
+    String getKbkList();
 }
 

@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Serves as a Message Endpoint - methods of this class are indirectly called by Spring Integration framework.
  * Created by default unless {@code bi-producer} Spring profile is active.
@@ -32,9 +29,9 @@ class ColvirBiProcessor implements BIProcessor {
      */
     @ServiceActivator(inputChannel = "kbkListChannel", outputChannel = "biProcessorChannelReply")
     @Override
-    public List<Object> getKbkList() {
+    public String getKbkList() {
 
         //TODO: do SOAP call to Colvir
-        return Collections.singletonList("KBK List");
+        return "KBK List";
     }
 }

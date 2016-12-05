@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,7 +37,7 @@ public class MessagingBiTest {
 
     @Test
     public void shouldGetKbkList() {
-        List<Object> kbkList =  biProcessor.getKbkList();
+        String kbkList =  biProcessor.getKbkList();
         assertThat(kbkList).isEqualTo(Collections.singletonList("KBK List"));
     }
 }
