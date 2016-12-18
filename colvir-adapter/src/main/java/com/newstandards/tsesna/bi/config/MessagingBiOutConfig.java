@@ -1,7 +1,5 @@
 package com.newstandards.tsesna.bi.config;
 
-import com.newstandards.tsesna.bi.config.kafka.KafkaMessagingBiOutConfig;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 
@@ -17,6 +15,5 @@ import org.springframework.context.annotation.Profile;
     "classpath:com/newstandards/tsesna/bi/messaging-bi-activemq-producer-config.xml",
     "classpath:com/newstandards/tsesna/bi/messaging-bi-rabbitmq-producer-config.xml"
 })
-@Import(KafkaMessagingBiOutConfig.class)
 public class MessagingBiOutConfig {
 }

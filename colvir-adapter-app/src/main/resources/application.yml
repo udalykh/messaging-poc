@@ -30,26 +30,6 @@ brokerURL: 'http://localhost:1414'
 ibmmq:
   wmqChannel: 'QM_TEST.MY'
 
----
-
-spring:
-  profiles: 'kafka'
-brokerURL: 'localhost:9092'
-zookeeperURL: 'localhost:2181'
-
-kafka:
-  producer:
-    retriesConfig: 0
-    batchSizeConfig: 16384
-    lingerMsConfig: 1
-    bufferMemoryConfig: 33554432
-  consumer:
-    groupIdConfig: 'testGroup'
-    enableAutoCommitConfig: true
-    autoCommitIntervalMsConfig: 100
-    sessionTimeoutMsConfig: 15000
-  messageKeyRequest: bi.key.request
-  messageKeyReply: bi.key.reply
 
 
 

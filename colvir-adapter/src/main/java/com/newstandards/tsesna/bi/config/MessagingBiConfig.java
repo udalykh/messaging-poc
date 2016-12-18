@@ -1,6 +1,5 @@
 package com.newstandards.tsesna.bi.config;
 
-import com.newstandards.tsesna.bi.config.kafka.KafkaCommonConfig;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
@@ -23,7 +22,7 @@ import java.net.URL;
 
 @Configuration
 @IntegrationComponentScan
-@Import({MessagingBiInConfig.class, MessagingBiOutConfig.class, KafkaCommonConfig.class})
+@Import({MessagingBiInConfig.class, MessagingBiOutConfig.class})
 public class MessagingBiConfig {
 
     private static Logger logger = LoggerFactory.getLogger(MessagingBiConfig.class);
