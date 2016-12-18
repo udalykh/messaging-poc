@@ -25,6 +25,14 @@ brokerURL: ''
 ---
 
 spring:
+  profiles: 'ibmmq'
+brokerURL: 'http://localhost:1414'
+ibmmq:
+  wmqChannel: 'QM_TEST.MY'
+
+---
+
+spring:
   profiles: 'kafka'
 brokerURL: 'localhost:9092'
 zookeeperURL: 'localhost:2181'
@@ -42,6 +50,7 @@ kafka:
     sessionTimeoutMsConfig: 15000
   messageKeyRequest: bi.key.request
   messageKeyReply: bi.key.reply
+
 
 
 
