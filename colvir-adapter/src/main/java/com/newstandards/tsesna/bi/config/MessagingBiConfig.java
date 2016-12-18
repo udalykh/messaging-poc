@@ -2,20 +2,22 @@ package com.newstandards.tsesna.bi.config;
 
 import com.newstandards.tsesna.bi.config.kafka.KafkaCommonConfig;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.jms.ConnectionFactory;
 import java.net.URI;
 
 @Configuration
+@IntegrationComponentScan
 @Import({MessagingBiInConfig.class, MessagingBiOutConfig.class, KafkaCommonConfig.class})
 public class MessagingBiConfig {
 
